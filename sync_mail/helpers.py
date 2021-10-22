@@ -61,7 +61,7 @@ def start_service(self_gmail_obj, client_gmail_objs, subject):
                 mail_data = {i['name']:i['value'] for i in full_msg_obj['payload']['headers'] if i.get('name') == 'Subject'}
                 if subject != mail_data['Subject']:continue
                 for client_gmail_obj in client_gmail_objs:
-                    _ = client_gmail_obj.service.users().messages().insert(userId='me', body={'raw': msg_obj['raw']}).execute()
+                    _ = client_gmail_obj.service.users().messages().insert(userId='me', body={'raw': msg_obj['raw'], "labelIds": ["INBOX"]}).execute()
                     print(f'updated for {client_gmail_obj.email_address}')
                 print('done')
             self_gmail_obj.present_history_id = self_gmail_obj.get_present_history_id()
